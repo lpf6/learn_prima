@@ -1,4 +1,4 @@
-# prima.cpp: Speeding up 70B-level LLM inference on low-resource everyday home clusters
+# Prima.cpp: Fast 30-70B LLM Inference on Heterogeneous and Low-Resource Home Clusters
 
 ![prima](https://raw.githubusercontent.com/Lizonghang/prima.cpp/main/figures/prima-cpp-logo.png)
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
