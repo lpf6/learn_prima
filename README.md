@@ -390,13 +390,10 @@ This project builds upon the incredible work from the open-source community, esp
 If you find this work helpful, please do not hesitate to cite us and send a star! 🤩
 
 ```bibtex
-@misc{li2025primacpp,
-    title={PRIMA.CPP: Speeding Up 70B-Scale LLM Inference on Low-Resource Everyday Home Clusters}, 
-    author={Zonghang Li and Tao Li and Wenjiao Feng and Mohsen Guizani and Hongfang Yu and Qirong Ho and Wei Xiang},
-    year={2025},
-    eprint={2504.08791},
-    archivePrefix={arXiv},
-    primaryClass={cs.DC},
-    url={https://arxiv.org/abs/2504.08791}, 
+@inproceedings{li2026primacpp,
+    title={PRIMA.CPP: Fast 30-70B LLM Inference on Heterogeneous and Low-Resource Home Clusters}, 
+    author={Zonghang Li and Tao Li and Wenjiao Feng and Rongxing Xiao and Jianshu She and Hong Huang and Mohsen Guizani and Hongfang Yu and Qirong Ho and Wei Xiang and Steve Liu},
+    year={2026},
+    booktitle={International Conference on Learning Representations},
 }
 ```
