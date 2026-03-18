@@ -1,0 +1,155 @@
+# Prima.cpp 学习教程
+
+欢迎来到 Prima.cpp 学习教程！本教程将带你从 CUDA 编程新手成长为能够维护项目、添加新模型支持、处理多平台兼容性问题的开发者。
+
+## 学习目标
+
+完成本教程后，你将能够：
+
+1. 理解 CUDA 编程模型和优化技术
+2. 处理不同 GPU 架构（SM 75, 80, 86, 89, 90）的兼容性
+3. 理解并实现各种量化算法
+4. 阅读和优化核心 CUDA 内核
+5. 处理 CPU SIMD 指令集兼容性（x86_64 AVX/AVX2/AVX-512，ARM NEON）
+6. 为项目添加新的模型架构支持
+
+## 各阶段能力目标
+
+| 阶段 | 学完后能做什么 | 实际工作示例 |
+|------|----------------|--------------|
+| **1. CUDA 基础** | 阅读 CUDA 内核代码、理解基础优化、调试简单问题 | 理解 `warp_reduce_sum`、修改内核参数 |
+| **2. GPU 架构** | 理解架构差异、修改架构支持、诊断架构错误 | 添加新架构编译支持、解决 "no device code" 错误 |
+| **3. 量化技术** | 选择量化类型、使用量化工具、阅读量化代码 | 量化模型、估算内存占用、理解反量化实现 |
+| **4. CUDA 内核** | 阅读复杂内核、修改内核参数、添加简单算子 | 理解 MMQ、Flash Attention，使用 Nsight 分析 |
+| **5. CPU SIMD** | 阅读 SIMD 代码、理解条件编译、修改 SIMD 优化 | 添加 SIMD 实现、检测 CPU 特性 |
+| **6. LLM 架构** | 添加新模型、理解计算图、调试模型问题 | 实现新模型转换脚本、构建计算图 |
+| **7. 后端兼容** | 理解后端架构、处理后端问题、跨平台调试 | 诊断后端问题、处理后端选择 |
+| **8. llama.cpp 优化** | 理解 mmap、KV Cache、批处理、Flash Attention | 优化推理性能、配置 GPU 卸载 |
+| **9. prima.cpp 优化** | 理解分布式推理、Piped-Ring 并行、异构调度 | 配置多设备推理、优化负载分配 |
+
+## 教程结构
+
+```
+learning/
+├── README.md                    # 本文件 - 总览
+├── KNOWLEDGE_MAP.md             # 知识脉络图
+├── 01-cuda-basics/              # 第一阶段：CUDA 基础
+│   ├── README.md
+│   ├── 01-thread-hierarchy.md
+│   ├── 02-memory-model.md
+│   ├── 03-synchronization.md
+│   └── 04-practice-exercises.md
+├── 02-gpu-architecture/         # 第二阶段：GPU 架构
+│   ├── README.md
+│   ├── 01-compute-capability.md
+│   ├── 02-arch-specific-features.md
+│   └── 03-code-adaptation.md
+├── 03-quantization/             # 第三阶段：量化技术
+│   ├── README.md
+│   ├── 01-quant-basics.md
+│   ├── 02-quant-types.md
+│   └── 03-quant-implementation.md
+├── 04-cuda-kernels/             # 第四阶段：核心 CUDA 内核
+│   ├── README.md
+│   ├── 01-mmq.md
+│   ├── 02-flash-attention.md
+│   └── 03-other-kernels.md
+├── 05-cpu-simd/                 # 第五阶段：CPU SIMD 优化
+│   ├── README.md
+│   ├── 01-x86-simd.md
+│   └── 02-arm-neon.md
+├── 06-llm-architecture/         # 第六阶段：LLM 架构
+│   ├── README.md
+│   ├── 01-model-structure.md
+│   └── 02-add-new-model.md
+├── 07-backend-compatibility/    # 第七阶段：后端兼容性
+│   ├── README.md
+│   └── 01-multi-backend.md
+├── 08-llama-optimizations/      # 第八阶段：LLaMA.cpp 优化实现
+│   └── README.md                # mmap、KV Cache、批处理、Flash Attention
+└── 09-prima-optimizations/      # 第九阶段：Prima.cpp 优化实现
+    └── README.md                # 分布式推理优化详解
+```
+
+## 学习路线图
+
+```
+Week 1-2:  第一阶段 - CUDA 基础
+           ├── 线程层次结构
+           ├── 内存模型
+           └── 同步机制
+
+Week 3-4:  第二阶段 - GPU 架构
+           ├── 计算能力版本
+           ├── 架构特定特性
+           └── 代码适配技术
+
+Week 5-6:  第三阶段 - 量化技术
+           ├── 量化基础概念
+           ├── 量化类型详解
+           └── CUDA 量化实现
+
+Week 7-10: 第四阶段 - 核心 CUDA 内核
+           ├── 矩阵乘法 (MMQ)
+           ├── Flash Attention
+           └── 其他核心算子
+
+Week 11-12: 第五阶段 - CPU SIMD 优化
+            ├── x86 SIMD (AVX/AVX2/AVX-512)
+            └── ARM NEON
+
+Week 13-15: 第六阶段 - LLM 架构
+            ├── 模型结构理解
+            ├── 添加新模型
+            └── 计算图构建
+
+Week 16+:  第七阶段 - 后端兼容性
+           └── 多后端适配
+```
+
+## 项目代码结构
+
+在学习过程中，你需要参考以下核心代码：
+
+```
+prima.cpp/
+├── ggml/
+│   ├── src/
+│   │   ├── ggml-cuda/        # CUDA 内核实现
+│   │   │   ├── common.cuh    # 公共工具函数
+│   │   │   ├── mmq.cu        # 矩阵乘法
+│   │   │   ├── fattn.cu      # Flash Attention
+│   │   │   ├── quantize.cu   # 量化
+│   │   │   └── ...
+│   │   ├── ggml-aarch64.c    # ARM64 优化
+│   │   ├── ggml-quants.c     # 量化实现
+│   │   └── llamafile/
+│   │       └── sgemm.cpp     # SIMD 优化 SGEMM
+│   └── include/
+│       ├── ggml.h            # 核心张量库
+│       └── ggml-cuda.h       # CUDA 接口
+├── src/
+│   └── llama.cpp             # 模型实现
+└── convert_hf_to_gguf.py     # 模型转换
+```
+
+## 如何使用本教程
+
+1. **按顺序学习**：每个阶段都建立在前一阶段的基础上
+2. **边学边练**：每个章节都有实践练习
+3. **阅读源码**：教程会引用项目中的实际代码
+4. **动手修改**：尝试修改代码并观察效果
+
+## 知识脉络图
+
+为了帮助你建立完整的知识体系，请参考 [知识脉络图](KNOWLEDGE_MAP.md)，其中包含：
+
+- 核心知识架构图
+- 知识点依赖关系
+- CUDA 与 CPU SIMD 的对应关系
+- 学习路径建议
+- 常见问题与知识点关联
+
+## 开始学习
+
+请从 [01-cuda-basics/README.md](01-cuda-basics/README.md) 开始你的学习之旅！
