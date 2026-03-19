@@ -1,3 +1,6 @@
 [submodule "kompute"]
 	path = ggml/src/kompute
 	url = https://github.com/nomic-ai/kompute.git
+[submodule "tilelang"]
+	path = tilelang
+	url = https://github.com/tile-ai/tilelang.git
