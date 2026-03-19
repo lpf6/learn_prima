@@ -12,6 +12,9 @@
 4. 阅读和优化核心 CUDA 内核
 5. 处理 CPU SIMD 指令集兼容性（x86_64 AVX/AVX2/AVX-512，ARM NEON）
 6. 为项目添加新的模型架构支持
+7. 使用性能分析工具优化内核
+8. 调试 CUDA 程序和性能问题
+9. 实现多后端兼容性和分布式推理
 
 ## 各阶段能力目标
 
@@ -26,6 +29,7 @@
 | **7. 后端兼容** | 理解后端架构、处理后端问题、跨平台调试 | 诊断后端问题、处理后端选择 |
 | **8. llama.cpp 优化** | 理解 mmap、KV Cache、批处理、Flash Attention | 优化推理性能、配置 GPU 卸载 |
 | **9. prima.cpp 优化** | 理解分布式推理、Piped-Ring 并行、异构调度 | 配置多设备推理、优化负载分配 |
+| **9. prima.cpp 优化** | 理解分布式推理、Piped-Ring 并行、异构调度 | 配置多设备推理、优化负载分配 |
 
 ## 教程结构
 
@@ -33,12 +37,20 @@
 learning/
 ├── README.md                    # 本文件 - 总览
 ├── KNOWLEDGE_MAP.md             # 知识脉络图
+├── 00-prerequisites/            # 第零阶段：前置知识
+│   ├── README.md
+│   ├── 01-cpp-fundamentals.md   # C++ 编程基础
+│   ├── 02-parallel-computing.md # 并行计算基础
+│   └── 03-dl-basics.md          # 深度学习基础
 ├── 01-cuda-basics/              # 第一阶段：CUDA 基础
 │   ├── README.md
 │   ├── 01-thread-hierarchy.md
 │   ├── 02-memory-model.md
 │   ├── 03-synchronization.md
-│   └── 04-practice-exercises.md
+│   ├── 04-practice-exercises.md
+│   ├── 05-cuda-streams.md       # CUDA 流和事件
+│   ├── 06-performance-tools.md  # 性能分析工具
+│   └── 07-debugging.md          # CUDA 调试技术
 ├── 02-gpu-architecture/         # 第二阶段：GPU 架构
 │   ├── README.md
 │   ├── 01-compute-capability.md
@@ -67,17 +79,45 @@ learning/
 │   └── 01-multi-backend.md
 ├── 08-llama-optimizations/      # 第八阶段：LLaMA.cpp 优化实现
 │   └── README.md                # mmap、KV Cache、批处理、Flash Attention
-└── 09-prima-optimizations/      # 第九阶段：Prima.cpp 优化实现
-    └── README.md                # 分布式推理优化详解
+├── 09-prima-optimizations/      # 第九阶段：Prima.cpp 优化实现
+│   └── README.md                # 分布式推理优化详解
+├── 10-tilelang-optimizations/   # 第十阶段：TileLang 优化
+│   └── README.md                # DSL、编译器架构、多后端支持
+├── 11-projects/                 # 实践项目模块
+│   ├── README.md
+│   ├── 01-inference-service.md  # 构建推理服务
+│   ├── 02-custom-kernel.md      # 自定义内核开发
+│   ├── 03-model-quantization.md # 模型量化实践
+│   └── 04-performance-benchmark.md # 性能基准测试
+├── 12-tools-ecosystem/          # 工具与生态模块
+│   ├── README.md
+│   ├── 01-build-tools.md        # 构建工具
+│   ├── 02-debugging-tools.md    # 调试工具
+│   ├── 03-profiling-tools.md    # 性能分析工具
+│   └── 04-community-resources.md # 社区资源
+└── 13-troubleshooting/          # 故障排查模块
+    ├── README.md
+    ├── 01-common-errors.md      # 常见错误
+    ├── 02-debugging-strategies.md # 调试策略
+    ├── 03-performance-debugging.md # 性能调试
+    └── 04-faq.md                # 常见问题 FAQ
 ```
 
 ## 学习路线图
 
 ```
+Week 0-1:  第零阶段 - 前置知识（可选，根据需要）
+           ├── C++ 编程基础
+           ├── 并行计算基础
+           └── 深度学习基础
+
 Week 1-2:  第一阶段 - CUDA 基础
            ├── 线程层次结构
            ├── 内存模型
-           └── 同步机制
+           ├── 同步机制
+           ├── CUDA 流和事件
+           ├── 性能分析工具
+           └── CUDA 调试技术
 
 Week 3-4:  第二阶段 - GPU 架构
            ├── 计算能力版本
@@ -103,8 +143,29 @@ Week 13-15: 第六阶段 - LLM 架构
             ├── 添加新模型
             └── 计算图构建
 
-Week 16+:  第七阶段 - 后端兼容性
+Week 16:   第七阶段 - 后端兼容性
            └── 多后端适配
+
+Week 17-18: 第八阶段 - LLaMA.cpp 优化
+            ├── mmap 内存映射
+            ├── KV Cache 优化
+            ├── 批处理技术
+            └── Flash Attention
+
+Week 19-20: 第九阶段 - Prima.cpp 优化
+            ├── 分布式推理
+            ├── Piped-Ring 并行
+            └── 异构调度
+
+Week 21-22: 第十阶段 - TileLang 优化
+            ├── DSL 编程
+            ├── 编译器架构
+            └── 多后端支持
+
+Week 23+:  实践项目与故障排查
+           ├── 实践项目模块
+           ├── 工具与生态
+           └── 故障排查
 ```
 
 ## 项目代码结构
